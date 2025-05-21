@@ -1,0 +1,195 @@
+openapi: 3.0.0
+paths:
+  /auth/register:
+    post:
+      operationId: AuthController_register
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterDto"
+      responses:
+        "201":
+          description: ""
+      summary: Register user via Supabase
+      tags: &a1
+        - Auth
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginDto"
+      responses:
+        "201":
+          description: ""
+      summary: Login user via Supabase
+      tags: *a1
+  /auth/logout:
+    post:
+      operationId: AuthController_logout
+      parameters: []
+      responses:
+        "201":
+          description: ""
+      summary: Logout user
+      tags: *a1
+  /auth/confirm:
+    get:
+      operationId: AuthController_confirmEmail
+      parameters:
+        - name: token
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags: *a1
+  /auth/me:
+    get:
+      operationId: AuthController_me
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeResponseDto"
+      tags: *a1
+  /owners:
+    get:
+      operationId: OwnersController_getAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      summary: Get all Owners
+      tags: &a2
+        - Owners
+    post:
+      operationId: OwnersController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOwnerDto"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OwnerDto"
+      summary: Create Owner
+      tags: *a2
+  /owners/{id}:
+    get:
+      operationId: OwnersController_getById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      summary: Get Owner by ID
+      tags: *a2
+    delete:
+      operationId: OwnersController_delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      summary: Delete Owner by ID
+      tags: *a2
+  /owners/user/{userId}:
+    get:
+      operationId: OwnersController_getByUserId
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OwnerDto"
+      summary: Get all Owners where user is a member
+      tags: *a2
+info:
+  title: API
+  description: Auto-generated API docs
+  version: "1.0"
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    RegisterDto:
+      type: object
+      properties: {}
+    LoginDto:
+      type: object
+      properties: {}
+    MeResponseDto:
+      type: object
+      properties: {}
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+        deletedAt:
+          type: string
+      required:
+        - id
+        - email
+        - createdAt
+        - deletedAt
+    OwnerDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserDto"
+      required:
+        - id
+        - name
+    CreateOwnerDto:
+      type: object
+      properties: {}

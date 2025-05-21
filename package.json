@@ -1,0 +1,21 @@
+{
+  "name": "sem_prace_2ls",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:generate": "prisma generate --schema=apps/api/prisma/schema.prisma --print --no-install",
+    "orval": "orval --config orval.config.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "prisma": "^6.7.0"
+  },
+  "devDependencies": {
+    "orval": "^7.9.0"
+  }
+}

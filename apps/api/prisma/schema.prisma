@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  deletedAt DateTime @default(now())
+
+  userOwners UserOwner[]
+  Employees  Employee[]
+  UserRole   UserRole?
+}
+
+model Owner {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  createdAt   DateTime  @default(now())
+  deletedAt   DateTime? @default(now())
+
+  userOwners UserOwner[]
+  Employees  Employee[]
+}
+
+model UserOwner {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  owner   Owner  @relation(fields: [ownerId], references: [id])
+  ownerId String
+
+  @@id([userId, ownerId])
+}
+
+model UserRole {
+  id   String @id @default(uuid())
+  role Role   @default(USER)
+
+  User   User   @relation(fields: [UserId], references: [id])
+  UserId String @unique
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
+}
+
+model Employee {
+  id          String @id @default(uuid())
+  name        String
+  phoneNumber String
+  email       String
+
+  Owner    Owner  @relation(fields: [OwnerId], references: [id])
+  OwnerId  String
+  Branch   Branch @relation(fields: [BranchId], references: [id])
+  BranchId String
+  User     User   @relation(fields: [UserId], references: [id])
+  UserId   String
+}
+
+model Branch {
+  id       String     @id @default(uuid())
+  name     String
+  location String
+  type     BranchType @default(MARKET)
+
+  Employees Employee[]
+}
+
+enum BranchType {
+  OFFICCE
+  MARKET
+}
