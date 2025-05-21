@@ -1,0 +1,15 @@
+{
+  "base": {
+    "welcome": "Welcome"
+  },
+  "navbar": {
+    "language": {
+      "czech": "czech",
+      "english": "english"
+    }
+  },
+  "home": "Home",
+
+  "about": "About"
+
+}

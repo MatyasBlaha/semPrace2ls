@@ -1,0 +1,13 @@
+{
+  "base": {
+    "welcome": "vitejte"
+  },
+  "navbar": {
+    "language": {
+      "czech": "česky",
+      "english": "anglicky"
+    }
+  },
+  "home": "domu",
+  "about": "o nas"
+}

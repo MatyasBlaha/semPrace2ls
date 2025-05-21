@@ -1,0 +1,1 @@
+export const locales = ['cz', 'en'] as const
