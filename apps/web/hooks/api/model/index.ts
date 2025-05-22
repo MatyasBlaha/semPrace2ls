@@ -7,8 +7,14 @@
  */
 
 export * from './authControllerConfirmEmailParams';
+export * from './branchDto';
+export * from './branchDtoType';
+export * from './createBranchDto';
+export * from './createBranchDtoType';
+export * from './createEmployeeDto';
 export * from './createOwnerDto';
 export * from './createUserDto';
+export * from './employeeDto';
 export * from './loginDto';
 export * from './meResponseDto';
 export * from './ownerDto';

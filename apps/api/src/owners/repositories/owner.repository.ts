@@ -1,7 +1,7 @@
 // owner/repositories/owner.repository.ts
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Prisma } from '../../../generated/client';
+import {Prisma} from '@prisma/client'
 
 @Injectable()
 export class OwnerRepository {
@@ -10,8 +10,12 @@ export class OwnerRepository {
     findAll() {
         return this.prisma.owner.findMany({
             include: {
-                Employees: true,
-            },
+                Branches: {
+                    include: {
+                        Employees: true
+                    }
+                }
+            }
         });
     }
 
@@ -28,8 +32,12 @@ export class OwnerRepository {
         return this.prisma.owner.findUnique({
             where: { id },
             include: {
-                Employees: true,
-            },
+                Branches: {
+                    include: {
+                        Employees: true
+                    }
+                }
+            }
         });
     }
 
@@ -43,8 +51,12 @@ export class OwnerRepository {
                 },
             },
             include: {
-                Employees: true,
-            },
+                Branches: {
+                    include: {
+                        Employees: true
+                    }
+                }
+            }
         });
     }
 
@@ -57,7 +69,6 @@ export class OwnerRepository {
         return this.prisma.owner.create({
             data,
             include: {
-                Employees: true,
                 userOwners: {
                     include: {
                         user: true,

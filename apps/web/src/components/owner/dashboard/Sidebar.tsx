@@ -25,7 +25,11 @@ export const newOwnerSchema = z.object({
 
 export type NewOwnerValues = z.infer<typeof newOwnerSchema>;
 
-export default function Sidebar() {
+interface SidebarProps {
+    onMobileClose?: () => void;
+}
+
+export default function Sidebar({ onMobileClose }: SidebarProps) {
     const { ownerId } = useOwner();
     const locale = useLocale();
     const { data: authData, loading: authLoading } = useAuth(true);
@@ -33,19 +37,12 @@ export default function Sidebar() {
     const { data: owners = [], isLoading: ownersLoading } = useOwnersControllerGetByUserId(authData?.id ?? '');
     const { data: currentOwner, isSuccess } = useOwnersControllerGetById<NewOwnerValues>(ownerId);
 
+    const handleLinkClick = () => {
+        onMobileClose?.();
+    };
+
     return (
-        <Box
-            as="aside"
-            position={{ base: 'relative', md: 'fixed' }}
-            left={0}
-            top='64px'
-            h={{ base: 'auto', md: '100vh' }}
-            w={{ base: 'full', md: '250px' }}
-            bg="gray.800"
-            color="white"
-            p={4}
-            zIndex={1000}
-        >
+        <Box as="aside" bg="gray.800" color="white" p={4} h="100%" overflowY="auto">
             <VStack align="start" spacing={6}>
                 <Text fontSize="xl" fontWeight="bold">
                     My Owners
@@ -72,6 +69,7 @@ export default function Sidebar() {
                                     display="block"
                                     color='white'
                                     bg='black'
+                                    onClick={handleLinkClick}
                                 >
                                     {owner.name}
                                 </Link>
@@ -84,11 +82,25 @@ export default function Sidebar() {
                     <Text fontSize="sm" fontWeight="semibold">
                         Navigation
                     </Text>
-                    <Link color='white' href={`/${locale}/owner/employees`} display="flex" alignItems="center" gap={2}>
+                    <Link
+                        color='white'
+                        href={`/${locale}/owner/${ownerId}/branches`}
+                        display="flex"
+                        alignItems="center"
+                        gap={2}
+                        onClick={handleLinkClick}
+                    >
                         <Icon as={MdPerson} boxSize={5} />
-                        Employees
+                        Branches
                     </Link>
-                    <Link color='white' href={`/${locale}/owner/${ownerId}/settings`} display="flex" alignItems="center" gap={2}>
+                    <Link
+                        color='white'
+                        href={`/${locale}/owner/${ownerId}/settings`}
+                        display="flex"
+                        alignItems="center"
+                        gap={2}
+                        onClick={handleLinkClick}
+                    >
                         <Icon as={MdWork} boxSize={5} />
                         Settings
                     </Link>

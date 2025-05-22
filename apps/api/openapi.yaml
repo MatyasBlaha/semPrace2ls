@@ -140,6 +140,130 @@ paths:
                   $ref: "#/components/schemas/OwnerDto"
       summary: Get all Owners where user is a member
       tags: *a2
+  /branch:
+    get:
+      operationId: BranchController_getAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      summary: Get all Branches
+      tags: &a3
+        - Branch
+    post:
+      operationId: BranchController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBranchDto"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BranchDto"
+      summary: Create Branch
+      tags: *a3
+  /branch/{id}:
+    get:
+      operationId: BranchController_getById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      summary: Get Branch by ID
+      tags: *a3
+  /branch/owner/{ownerId}:
+    get:
+      operationId: BranchController_getBranchByOwnerId
+      parameters:
+        - name: ownerId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BranchDto"
+      summary: Get All Branches by owner Id
+      tags: *a3
+  /employee:
+    get:
+      operationId: EmployeeController_getAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      summary: Get all Employees
+      tags: &a4
+        - Employee
+    post:
+      operationId: EmployeeController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEmployeeDto"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeDto"
+      summary: Create employee
+      tags: *a4
+  /employee/{id}:
+    get:
+      operationId: EmployeeController_getById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      summary: Get employee by ID
+      tags: *a4
+  /employee/user/{userId}:
+    get:
+      operationId: EmployeeController_getByUserId
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OwnerDto"
+      summary: Get all employees by branch
+      tags: *a4
 info:
   title: API
   description: Auto-generated API docs
@@ -193,3 +317,80 @@ components:
     CreateOwnerDto:
       type: object
       properties: {}
+    BranchDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        location:
+          type: string
+        type:
+          type: string
+          enum:
+            - OFFICE
+            - MARKET
+            - WAREHOUSE
+        ownerId:
+          type: string
+        owner:
+          $ref: "#/components/schemas/OwnerDto"
+      required:
+        - id
+        - name
+        - location
+        - type
+        - ownerId
+        - owner
+    CreateBranchDto:
+      type: object
+      properties:
+        name:
+          type: string
+        location:
+          type: string
+        type:
+          type: string
+          enum:
+            - OFFICE
+            - MARKET
+            - WAREHOUSE
+        ownerId:
+          type: string
+      required:
+        - name
+        - location
+        - type
+        - ownerId
+    CreateEmployeeDto:
+      type: object
+      properties: {}
+    EmployeeDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        branchId:
+          type: string
+        userId:
+          type: string
+        branch:
+          $ref: "#/components/schemas/BranchDto"
+        user:
+          $ref: "#/components/schemas/UserDto"
+      required:
+        - id
+        - name
+        - phoneNumber
+        - email
+        - branchId
+        - userId
+        - branch
+        - user

@@ -8,3 +8,11 @@ export const newOwnerSchema = z.object({
 })
 
 export type NewOwnerValues = z.infer<typeof newOwnerSchema>
+
+export const ownerSchema = newOwnerSchema.extend({
+    id: z.string().uuid(),
+    name: z.string(),
+    description: z.string().optional(),
+    createdAt: z.string().datetime(),
+    deletedAt: z.string().datetime().optional(),
+})

@@ -3,6 +3,7 @@ import { Request } from 'express';
 import * as jwt from 'jsonwebtoken';
 import {PrismaClient} from "@prisma/client";
 import {PrismaService} from "../prisma/prisma.service";
+import {Role} from '@prisma/client'
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -30,7 +31,7 @@ export class JwtAuthGuard implements CanActivate {
             request.user = {
                 id: decoded.sub,
                 email: decoded.email,
-                role: userWithRole?.UserRole?.role ?? 'USER',
+                role: userWithRole?.UserRole?.role ?? Role.USER,
                 ...decoded, // other claims if needed
             };
             return true;

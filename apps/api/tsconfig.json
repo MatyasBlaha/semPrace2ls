@@ -18,6 +18,9 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true,
+    "paths": {
+      "@prisma/client": ["./node_modules/.prisma/client"]
+    },
     "assets": [
       {
         "include": "../.env",

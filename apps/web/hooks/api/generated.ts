@@ -21,7 +21,11 @@ import type {
 
 import type {
   AuthControllerConfirmEmailParams,
+  BranchDto,
+  CreateBranchDto,
+  CreateEmployeeDto,
   CreateOwnerDto,
+  EmployeeDto,
   LoginDto,
   MeResponseDto,
   OwnerDto,
@@ -612,7 +616,7 @@ export const ownersControllerGetByUserId = (
 ) => {
       
       
-      return customInstance<void>(
+      return customInstance<OwnerDto[]>(
       {url: `/owners/user/${userId}`, method: 'GET', signal
     },
       options);
@@ -624,7 +628,7 @@ export const getOwnersControllerGetByUserIdQueryKey = (userId: string,) => {
     }
 
     
-export const getOwnersControllerGetByUserIdQueryOptions = <TData = Awaited<ReturnType<typeof ownersControllerGetByUserId>>, TError = unknown>(userId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof ownersControllerGetByUserId>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+export const getOwnersControllerGetByUserIdQueryOptions = <TData = Awaited<ReturnType<typeof ownersControllerGetByUserId>>, TError = OwnerDto[]>(userId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof ownersControllerGetByUserId>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -643,19 +647,533 @@ const {query: queryOptions, request: requestOptions} = options ?? {};
 }
 
 export type OwnersControllerGetByUserIdQueryResult = NonNullable<Awaited<ReturnType<typeof ownersControllerGetByUserId>>>
-export type OwnersControllerGetByUserIdQueryError = unknown
+export type OwnersControllerGetByUserIdQueryError = OwnerDto[]
 
 
 /**
  * @summary Get all Owners where user is a member
  */
 
-export function useOwnersControllerGetByUserId<TData = Awaited<ReturnType<typeof ownersControllerGetByUserId>>, TError = unknown>(
+export function useOwnersControllerGetByUserId<TData = Awaited<ReturnType<typeof ownersControllerGetByUserId>>, TError = OwnerDto[]>(
  userId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof ownersControllerGetByUserId>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
   
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getOwnersControllerGetByUserIdQueryOptions(userId,options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Get all Branches
+ */
+export const branchControllerGetAll = (
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<void>(
+      {url: `/branch`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getBranchControllerGetAllQueryKey = () => {
+    return [`/branch`] as const;
+    }
+
+    
+export const getBranchControllerGetAllQueryOptions = <TData = Awaited<ReturnType<typeof branchControllerGetAll>>, TError = unknown>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof branchControllerGetAll>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getBranchControllerGetAllQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof branchControllerGetAll>>> = ({ signal }) => branchControllerGetAll(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof branchControllerGetAll>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type BranchControllerGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof branchControllerGetAll>>>
+export type BranchControllerGetAllQueryError = unknown
+
+
+/**
+ * @summary Get all Branches
+ */
+
+export function useBranchControllerGetAll<TData = Awaited<ReturnType<typeof branchControllerGetAll>>, TError = unknown>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof branchControllerGetAll>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getBranchControllerGetAllQueryOptions(options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Create Branch
+ */
+export const branchControllerCreate = (
+    createBranchDto: CreateBranchDto,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<BranchDto>(
+      {url: `/branch`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createBranchDto, signal
+    },
+      options);
+    }
+  
+
+
+export const getBranchControllerCreateMutationOptions = <TError = BranchDto,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof branchControllerCreate>>, TError,{data: CreateBranchDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof branchControllerCreate>>, TError,{data: CreateBranchDto}, TContext> => {
+
+const mutationKey = ['branchControllerCreate'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof branchControllerCreate>>, {data: CreateBranchDto}> = (props) => {
+          const {data} = props ?? {};
+
+          return  branchControllerCreate(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type BranchControllerCreateMutationResult = NonNullable<Awaited<ReturnType<typeof branchControllerCreate>>>
+    export type BranchControllerCreateMutationBody = CreateBranchDto
+    export type BranchControllerCreateMutationError = BranchDto
+
+    /**
+ * @summary Create Branch
+ */
+export const useBranchControllerCreate = <TError = BranchDto,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof branchControllerCreate>>, TError,{data: CreateBranchDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof branchControllerCreate>>,
+        TError,
+        {data: CreateBranchDto},
+        TContext
+      > => {
+
+      const mutationOptions = getBranchControllerCreateMutationOptions(options);
+
+      return useMutation(mutationOptions );
+    }
+    
+/**
+ * @summary Get Branch by ID
+ */
+export const branchControllerGetById = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<void>(
+      {url: `/branch/${id}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getBranchControllerGetByIdQueryKey = (id: string,) => {
+    return [`/branch/${id}`] as const;
+    }
+
+    
+export const getBranchControllerGetByIdQueryOptions = <TData = Awaited<ReturnType<typeof branchControllerGetById>>, TError = unknown>(id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof branchControllerGetById>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getBranchControllerGetByIdQueryKey(id);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof branchControllerGetById>>> = ({ signal }) => branchControllerGetById(id, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof branchControllerGetById>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type BranchControllerGetByIdQueryResult = NonNullable<Awaited<ReturnType<typeof branchControllerGetById>>>
+export type BranchControllerGetByIdQueryError = unknown
+
+
+/**
+ * @summary Get Branch by ID
+ */
+
+export function useBranchControllerGetById<TData = Awaited<ReturnType<typeof branchControllerGetById>>, TError = unknown>(
+ id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof branchControllerGetById>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getBranchControllerGetByIdQueryOptions(id,options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Get All Branches by owner Id
+ */
+export const branchControllerGetBranchByOwnerId = (
+    ownerId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<BranchDto[]>(
+      {url: `/branch/owner/${ownerId}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getBranchControllerGetBranchByOwnerIdQueryKey = (ownerId: string,) => {
+    return [`/branch/owner/${ownerId}`] as const;
+    }
+
+    
+export const getBranchControllerGetBranchByOwnerIdQueryOptions = <TData = Awaited<ReturnType<typeof branchControllerGetBranchByOwnerId>>, TError = BranchDto[]>(ownerId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof branchControllerGetBranchByOwnerId>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getBranchControllerGetBranchByOwnerIdQueryKey(ownerId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof branchControllerGetBranchByOwnerId>>> = ({ signal }) => branchControllerGetBranchByOwnerId(ownerId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(ownerId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof branchControllerGetBranchByOwnerId>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type BranchControllerGetBranchByOwnerIdQueryResult = NonNullable<Awaited<ReturnType<typeof branchControllerGetBranchByOwnerId>>>
+export type BranchControllerGetBranchByOwnerIdQueryError = BranchDto[]
+
+
+/**
+ * @summary Get All Branches by owner Id
+ */
+
+export function useBranchControllerGetBranchByOwnerId<TData = Awaited<ReturnType<typeof branchControllerGetBranchByOwnerId>>, TError = BranchDto[]>(
+ ownerId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof branchControllerGetBranchByOwnerId>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getBranchControllerGetBranchByOwnerIdQueryOptions(ownerId,options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Get all Employees
+ */
+export const employeeControllerGetAll = (
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<void>(
+      {url: `/employee`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getEmployeeControllerGetAllQueryKey = () => {
+    return [`/employee`] as const;
+    }
+
+    
+export const getEmployeeControllerGetAllQueryOptions = <TData = Awaited<ReturnType<typeof employeeControllerGetAll>>, TError = unknown>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetAll>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getEmployeeControllerGetAllQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof employeeControllerGetAll>>> = ({ signal }) => employeeControllerGetAll(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetAll>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type EmployeeControllerGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof employeeControllerGetAll>>>
+export type EmployeeControllerGetAllQueryError = unknown
+
+
+/**
+ * @summary Get all Employees
+ */
+
+export function useEmployeeControllerGetAll<TData = Awaited<ReturnType<typeof employeeControllerGetAll>>, TError = unknown>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetAll>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getEmployeeControllerGetAllQueryOptions(options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Create employee
+ */
+export const employeeControllerCreate = (
+    createEmployeeDto: CreateEmployeeDto,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<EmployeeDto>(
+      {url: `/employee`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createEmployeeDto, signal
+    },
+      options);
+    }
+  
+
+
+export const getEmployeeControllerCreateMutationOptions = <TError = EmployeeDto,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof employeeControllerCreate>>, TError,{data: CreateEmployeeDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof employeeControllerCreate>>, TError,{data: CreateEmployeeDto}, TContext> => {
+
+const mutationKey = ['employeeControllerCreate'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof employeeControllerCreate>>, {data: CreateEmployeeDto}> = (props) => {
+          const {data} = props ?? {};
+
+          return  employeeControllerCreate(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type EmployeeControllerCreateMutationResult = NonNullable<Awaited<ReturnType<typeof employeeControllerCreate>>>
+    export type EmployeeControllerCreateMutationBody = CreateEmployeeDto
+    export type EmployeeControllerCreateMutationError = EmployeeDto
+
+    /**
+ * @summary Create employee
+ */
+export const useEmployeeControllerCreate = <TError = EmployeeDto,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof employeeControllerCreate>>, TError,{data: CreateEmployeeDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof employeeControllerCreate>>,
+        TError,
+        {data: CreateEmployeeDto},
+        TContext
+      > => {
+
+      const mutationOptions = getEmployeeControllerCreateMutationOptions(options);
+
+      return useMutation(mutationOptions );
+    }
+    
+/**
+ * @summary Get employee by ID
+ */
+export const employeeControllerGetById = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<void>(
+      {url: `/employee/${id}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getEmployeeControllerGetByIdQueryKey = (id: string,) => {
+    return [`/employee/${id}`] as const;
+    }
+
+    
+export const getEmployeeControllerGetByIdQueryOptions = <TData = Awaited<ReturnType<typeof employeeControllerGetById>>, TError = unknown>(id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetById>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getEmployeeControllerGetByIdQueryKey(id);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof employeeControllerGetById>>> = ({ signal }) => employeeControllerGetById(id, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetById>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type EmployeeControllerGetByIdQueryResult = NonNullable<Awaited<ReturnType<typeof employeeControllerGetById>>>
+export type EmployeeControllerGetByIdQueryError = unknown
+
+
+/**
+ * @summary Get employee by ID
+ */
+
+export function useEmployeeControllerGetById<TData = Awaited<ReturnType<typeof employeeControllerGetById>>, TError = unknown>(
+ id: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetById>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getEmployeeControllerGetByIdQueryOptions(id,options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Get all employees by branch
+ */
+export const employeeControllerGetByUserId = (
+    userId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<OwnerDto[]>(
+      {url: `/employee/user/${userId}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getEmployeeControllerGetByUserIdQueryKey = (userId: string,) => {
+    return [`/employee/user/${userId}`] as const;
+    }
+
+    
+export const getEmployeeControllerGetByUserIdQueryOptions = <TData = Awaited<ReturnType<typeof employeeControllerGetByUserId>>, TError = OwnerDto[]>(userId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetByUserId>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getEmployeeControllerGetByUserIdQueryKey(userId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof employeeControllerGetByUserId>>> = ({ signal }) => employeeControllerGetByUserId(userId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(userId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetByUserId>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type EmployeeControllerGetByUserIdQueryResult = NonNullable<Awaited<ReturnType<typeof employeeControllerGetByUserId>>>
+export type EmployeeControllerGetByUserIdQueryError = OwnerDto[]
+
+
+/**
+ * @summary Get all employees by branch
+ */
+
+export function useEmployeeControllerGetByUserId<TData = Awaited<ReturnType<typeof employeeControllerGetByUserId>>, TError = OwnerDto[]>(
+ userId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetByUserId>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getEmployeeControllerGetByUserIdQueryOptions(userId,options)
 
   const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

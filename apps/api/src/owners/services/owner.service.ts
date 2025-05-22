@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OwnerRepository } from '../repositories/owner.repository';
 import { CreateOwnerDto } from '../dto/create-owner.dto';
-import { Prisma } from '../../../generated/client';
+import Prisma from '@prisma/client'
 
 @Injectable()
 export class OwnerService {

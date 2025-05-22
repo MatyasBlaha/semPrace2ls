@@ -10,8 +10,6 @@ import {Box, Button, Toast} from "@chakra-ui/react";
 import {useAuth} from "@/hooks/useAuth";
 
 export default function NewOwnerForm() {
-
-
     const createOwnerMutation = useOwnersControllerCreate();
     const router = useRouter();
     const locale = useLocale()
@@ -52,6 +50,8 @@ export default function NewOwnerForm() {
         );
     };
 
+
+    // TODO: docasne, udelat komponentu
     if (loading) return <p>Loading...</p>;
 
     return (

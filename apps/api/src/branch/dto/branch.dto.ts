@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { BranchType } from '@prisma/client';
+import {OwnerDto} from "../../owners/dto/owner.dto";
 
 export class BranchDto {
     @ApiProperty()
@@ -10,6 +12,12 @@ export class BranchDto {
     @ApiProperty()
     location: string;
 
-    @ApiProperty({ enum: ['OFFICCE', 'MARKET'] })
-    type: 'OFFICCE' | 'MARKET';
-}   
+    @ApiProperty({ enum: BranchType })
+    type: BranchType;
+
+    @ApiProperty()
+    ownerId: string;
+
+    @ApiProperty({ type: () => OwnerDto })
+    owner: OwnerDto;
+}

@@ -6,6 +6,8 @@ import {AuthModule} from './auth/auth.module';
 import {PrismaModule} from './prisma/prisma.module';
 import {OwnersModule} from "./owners/owners.module";
 import {resolve} from 'path'
+import {BranchModule} from "./branch/branch.module";
+import {EmployeeModule} from "./employee/employee.module";
 
 
 @Module({
@@ -17,7 +19,9 @@ import {resolve} from 'path'
         PrismaModule,
         AuthModule,
         UsersModule,
-        OwnersModule
+        OwnersModule,
+        BranchModule,
+        EmployeeModule
     ],
     providers: [DatabaseService]
 })

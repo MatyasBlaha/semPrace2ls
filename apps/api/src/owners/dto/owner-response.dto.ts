@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserDto } from '../../users/dto/user.dto';
 import { OwnerDto } from './owner.dto';
-import { BranchDto } from '../../branch/dto/branch.dto';
+import { CreateBranchDto } from '../../branch/dto/create-branch.dto';
 
 export class EmployeeDto {
     @ApiProperty()
@@ -28,8 +28,8 @@ export class EmployeeDto {
     @ApiProperty({ type: () => OwnerDto })
     owner: OwnerDto;
 
-    @ApiProperty({ type: () => BranchDto })
-    branch: BranchDto;
+    @ApiProperty({ type: () => CreateBranchDto })
+    branch: CreateBranchDto;
 
     @ApiProperty({ type: () => UserDto })
     user: UserDto;
