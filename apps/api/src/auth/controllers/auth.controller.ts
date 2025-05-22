@@ -19,22 +19,22 @@ export class AuthController {
     return this.authService.register(dto);
   }
 
+  // auth.controller.ts
   @Post('login')
-  @ApiOperation({ summary: 'Login user via Supabase' })
-  @ApiBody({ type: LoginDto })
   async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
-    const session = await this.authService.login(dto);
-    const token = session.session.access_token;
-    console.log('Cookie set:', res.getHeaders()['set-cookie']);
+    const { session } = await this.authService.login(dto);
+    const token = session.access_token;
+    const isProd = process.env.NODE_ENV === 'production';
+
     res.cookie('access_token', token, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7 // 7 days
+      secure:   true,                // ← only true in prod
+      sameSite: 'none',
+      path:     '/',
+      maxAge:   7 * 24 * 60 * 60 * 1000,
     });
 
-    return session;
+    return { session };
   }
 
   @Post('logout')

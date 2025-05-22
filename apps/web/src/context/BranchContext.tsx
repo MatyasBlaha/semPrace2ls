@@ -14,7 +14,7 @@ export const BranchProvider = ({children}: {children: ReactNode}) => {
     const branchId = params?.branchId as string
 
     if (!branchId) {
-        throw new Error("OwnerProvider must be used on a route with [id] param");
+        throw new Error("BranchProvider must be used on a route with [id] param");
     }
 
     return (

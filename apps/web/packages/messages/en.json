@@ -5,7 +5,8 @@
   "navbar": {
     "language": {
       "czech": "czech",
-      "english": "english"
+      "english": "english",
+      "language": "language"
     }
   },
   "home": "Home",

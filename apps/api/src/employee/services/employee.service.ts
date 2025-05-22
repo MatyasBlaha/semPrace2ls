@@ -20,7 +20,7 @@ export class EmployeeService {
     }
 
     async create(dto: CreateEmployeeDto) {
-        const { name, phoneNumber, email, userId, branchId } = dto;
+        const { name, phoneNumber, email, userId, branchId, ownerId } = dto;
 
         const employee = await this.employeeRepository.create({
             name,
@@ -28,8 +28,13 @@ export class EmployeeService {
             email,
             userId,
             branchId,
+            ownerId
         });
 
         return this.employeeRepository.findById(employee.id);
+    }
+
+    getByOwnerId(ownerId: string){
+        return this.employeeRepository.findByOwnerId(ownerId)
     }
 }

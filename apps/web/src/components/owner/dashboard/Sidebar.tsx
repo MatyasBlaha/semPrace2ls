@@ -84,6 +84,17 @@ export default function Sidebar({ onMobileClose }: SidebarProps) {
                     </Text>
                     <Link
                         color='white'
+                        href={`/${locale}/owner/${ownerId}/employees`}
+                        display="flex"
+                        alignItems="center"
+                        gap={2}
+                        onClick={handleLinkClick}
+                    >
+                        <Icon as={MdWork} boxSize={5} />
+                        Employees
+                    </Link>
+                    <Link
+                        color='white'
                         href={`/${locale}/owner/${ownerId}/branches`}
                         display="flex"
                         alignItems="center"

@@ -7,6 +7,7 @@
  */
 import type { BranchDto } from './branchDto';
 import type { UserDto } from './userDto';
+import type { OwnerDto } from './ownerDto';
 
 export interface EmployeeDto {
   id: string;
@@ -15,6 +16,8 @@ export interface EmployeeDto {
   email: string;
   branchId: string;
   userId: string;
+  ownerId: string;
   branch: BranchDto;
   user: UserDto;
+  owner: OwnerDto;
 }

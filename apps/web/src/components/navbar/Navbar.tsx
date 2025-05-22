@@ -1,3 +1,5 @@
+'use client'
+
 import {
     Flex,
     Text,
@@ -8,8 +10,10 @@ import {
 import {MenuContent, MenuItem, MenuRoot, MenuTrigger} from "@ark-ui/react";
 import { useRouter} from "next/navigation";
 import {useTranslations} from "next-intl";
+import {useAuth} from "@/hooks/useAuth";
 
 const Navbar = () => {
+    const {data: user} = useAuth()
     const router = useRouter()
     const t = useTranslations("navbar.language")
 
@@ -27,11 +31,11 @@ const Navbar = () => {
                     </Link>
 
                 <Flex alignItems="center" display='flex'>
-                    <div>
+                    <Box mr={2}>
                         <MenuRoot>
                             <MenuTrigger asChild>
                                 <Button>
-                                    Language
+                                    {t('language')}
                                 </Button>
                             </MenuTrigger>
                             <MenuContent>
@@ -43,9 +47,9 @@ const Navbar = () => {
                                 </MenuItem>
                             </MenuContent>
                         </MenuRoot>
-                    </div>
+                    </Box>
                     <Flex alignItems="center">
-                        <Text>"name"</Text>
+                        <Text>{user?.email}</Text>
                     </Flex>
                 </Flex>
             </Flex>

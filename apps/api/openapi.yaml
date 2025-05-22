@@ -29,7 +29,6 @@ paths:
       responses:
         "201":
           description: ""
-      summary: Login user via Supabase
       tags: *a1
   /auth/logout:
     post:
@@ -264,6 +263,24 @@ paths:
                   $ref: "#/components/schemas/OwnerDto"
       summary: Get all employees by branch
       tags: *a4
+  /employee/owner/{ownerId}:
+    get:
+      operationId: EmployeeController_getByOwnerId
+      parameters:
+        - name: ownerId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeDto"
+      summary: Get all employees by Owner ID
+      tags: *a4
 info:
   title: API
   description: Auto-generated API docs
@@ -381,10 +398,14 @@ components:
           type: string
         userId:
           type: string
+        ownerId:
+          type: string
         branch:
           $ref: "#/components/schemas/BranchDto"
         user:
           $ref: "#/components/schemas/UserDto"
+        owner:
+          $ref: "#/components/schemas/OwnerDto"
       required:
         - id
         - name
@@ -392,5 +413,7 @@ components:
         - email
         - branchId
         - userId
+        - ownerId
         - branch
         - user
+        - owner

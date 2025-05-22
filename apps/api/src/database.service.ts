@@ -9,6 +9,10 @@ export class DatabaseService implements OnModuleInit {
   constructor() {
     this.client = new Client({
       connectionString: process.env.DATABASE_URL,
+      ssl: {
+        // ← allow self-signed certs
+        rejectUnauthorized: false,
+      },
     });
   }
 

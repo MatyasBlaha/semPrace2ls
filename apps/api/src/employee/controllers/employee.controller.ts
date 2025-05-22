@@ -41,4 +41,11 @@ export class EmployeeController {
         return this.employeeService.create(dto);
     }
 
+    @Get('owner/:ownerId')
+    @ApiOperation({summary: 'Get all employees by Owner ID'})
+    @ApiResponse({type: EmployeeDto})
+    @ApiParam({name: 'ownerId'})
+    getByOwnerId(@Param('ownerId') ownerId: string){
+        return this.employeeService.getByOwnerId(ownerId)
+    }
 }

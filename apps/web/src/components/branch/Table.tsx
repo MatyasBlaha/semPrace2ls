@@ -21,9 +21,11 @@ import {
 import {useBranchControllerGetBranchByOwnerId} from '../../../hooks/api/generated';
 import {BranchValues} from '@/types/branch/branch';
 import {useMemo} from 'react';
+import {useLocale} from "@/hooks/useLocale";
 
 export default function BranchTable({ownerId}: { ownerId: string }) {
     const {data: branches, isLoading, error} = useBranchControllerGetBranchByOwnerId(ownerId);
+    const locale = useLocale();
 
     const data = useMemo(() => branches ?? [], [branches]);
 
@@ -57,7 +59,7 @@ export default function BranchTable({ownerId}: { ownerId: string }) {
             cell: info => {
                 const id = info.row.original.id;
                 return (
-                    <Link href={`/branches/${id}`} color="blue.500" textDecoration="underline">
+                    <Link href={`/${locale}/owner/${ownerId}/branches/${id}`} color="blue.500" textDecoration="underline">
                         View
                     </Link>
                 );
@@ -75,7 +77,7 @@ export default function BranchTable({ownerId}: { ownerId: string }) {
     if (error) return <Text color="red.500">Error loading data</Text>;
 
     return (
-        <Box overflowX="auto">
+        <Box overflowX="auto" maxWidth='700px'>
             <Table.Root variant="simple" size="md">
                 <TableHeader>
                     {table.getHeaderGroups().map(headerGroup => (

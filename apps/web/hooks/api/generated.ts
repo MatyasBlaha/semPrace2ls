@@ -107,9 +107,6 @@ export const useAuthControllerRegister = <TError = unknown,
       return useMutation(mutationOptions );
     }
     
-/**
- * @summary Login user via Supabase
- */
 export const authControllerLogin = (
     loginDto: LoginDto,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
@@ -155,10 +152,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type AuthControllerLoginMutationBody = LoginDto
     export type AuthControllerLoginMutationError = unknown
 
-    /**
- * @summary Login user via Supabase
- */
-export const useAuthControllerLogin = <TError = unknown,
+    export const useAuthControllerLogin = <TError = unknown,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof authControllerLogin>>, TError,{data: LoginDto}, TContext>, request?: SecondParameter<typeof customInstance>}
  ): UseMutationResult<
         Awaited<ReturnType<typeof authControllerLogin>>,
@@ -1174,6 +1168,70 @@ export function useEmployeeControllerGetByUserId<TData = Awaited<ReturnType<type
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getEmployeeControllerGetByUserIdQueryOptions(userId,options)
+
+  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+/**
+ * @summary Get all employees by Owner ID
+ */
+export const employeeControllerGetByOwnerId = (
+    ownerId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<EmployeeDto>(
+      {url: `/employee/owner/${ownerId}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getEmployeeControllerGetByOwnerIdQueryKey = (ownerId: string,) => {
+    return [`/employee/owner/${ownerId}`] as const;
+    }
+
+    
+export const getEmployeeControllerGetByOwnerIdQueryOptions = <TData = Awaited<ReturnType<typeof employeeControllerGetByOwnerId>>, TError = EmployeeDto>(ownerId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetByOwnerId>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getEmployeeControllerGetByOwnerIdQueryKey(ownerId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof employeeControllerGetByOwnerId>>> = ({ signal }) => employeeControllerGetByOwnerId(ownerId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(ownerId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetByOwnerId>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type EmployeeControllerGetByOwnerIdQueryResult = NonNullable<Awaited<ReturnType<typeof employeeControllerGetByOwnerId>>>
+export type EmployeeControllerGetByOwnerIdQueryError = EmployeeDto
+
+
+/**
+ * @summary Get all employees by Owner ID
+ */
+
+export function useEmployeeControllerGetByOwnerId<TData = Awaited<ReturnType<typeof employeeControllerGetByOwnerId>>, TError = EmployeeDto>(
+ ownerId: string, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof employeeControllerGetByOwnerId>>, TError, TData>, request?: SecondParameter<typeof customInstance>}
+  
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getEmployeeControllerGetByOwnerIdQueryOptions(ownerId,options)
 
   const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

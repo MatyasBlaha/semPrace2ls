@@ -10,7 +10,9 @@ export function useAuth(protectedRoute = false) {
     const router = useRouter();
     const locale = useLocale();
     const { data, isSuccess, isError, isLoading: queryLoading } = useAuthControllerMe();
-
+    console.log(data)
+    console.log(queryLoading)
+    console.log(isError)
     useEffect(() => {
         if (queryLoading) return; // počkej na dokončení načítání
 

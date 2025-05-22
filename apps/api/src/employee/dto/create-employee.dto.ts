@@ -15,4 +15,7 @@ export class CreateEmployeeDto {
 
     @IsUUID()
     branchId: string;
+
+    @IsUUID()
+    ownerId: string;
 }

@@ -35,7 +35,7 @@ export class EmployeeRepository {
     }
 
     findByUserId(userId: string) {
-        return this.prisma.employee.findUnique({
+        return this.prisma.employee.findFirst({
             where: {userId},
             include: {
                 User: true,
@@ -54,6 +54,7 @@ export class EmployeeRepository {
         email: string;
         userId: string;
         branchId: string;
+        ownerId: string
     }) {
         return this.prisma.employee.create({
             data,
@@ -68,4 +69,17 @@ export class EmployeeRepository {
         });
     }
 
+    findByOwnerId(ownerId: string) {
+        return this.prisma.employee.findMany({
+            where: {ownerId},
+            include: {
+                User: true,
+                Branch: {
+                    include: {
+                        owner: true,
+                    },
+                },
+            },
+        });
+    }
 }
