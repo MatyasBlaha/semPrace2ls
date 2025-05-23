@@ -27,7 +27,7 @@ const Navbar = () => {
         <Box bg='gray.100' px={4}>
             <Flex h={16} alignItems="center" justifyContent="space-between">
                     <Link fontSize="xl" fontWeight="bold">
-                        firma
+                        CompanyTrack
                     </Link>
 
                 <Flex alignItems="center" display='flex'>

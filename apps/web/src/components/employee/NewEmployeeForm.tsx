@@ -6,7 +6,7 @@ import {useLocale} from "@/hooks/useLocale";
 import {useAuth} from "@/hooks/useAuth";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {newEmployeeSchema, NewEmployeeValues} from "@/types/employee/employee";
+import {newEmployeeSchema, NewEmployeeValues, roleOptions} from "@/types/employee/employee";
 import {Box, Button, Input} from "@chakra-ui/react";
 import {Select} from "@chakra-ui/select";
 import {BranchTypeEnum} from "@/types/branch/branch";
@@ -69,7 +69,7 @@ export default function NewEmployeeForm({ownerId}: {ownerId: string}){
     }
 
     return(
-        <Box>
+        <Box maxWidth='400px'>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box>
                     <Input
@@ -100,6 +100,13 @@ export default function NewEmployeeForm({ownerId}: {ownerId: string}){
                         {branches.map((b) => (
                             <option key={b.id} value={b.id}>
                                 {b.name}
+                            </option>
+                        ))}
+                    </Select>
+                    <Select {...register('role')}>
+                        {roleOptions.map((role) => (
+                            <option key={role} value={role}>
+                                {role}
                             </option>
                         ))}
                     </Select>

@@ -31,3 +31,13 @@ export const employeeSchema = z.object({
 })
 
 export type EmployeeValues = z.infer<typeof employeeSchema>
+
+export const RoleEnum = {
+    SUPERADMIN: 'SUPERADMIN',
+    ACCOUNTANT: 'ACCOUNTANT',
+    MANAGER: 'MANAGER',
+    USER: 'USER',
+    HR: 'HR',
+} as const;
+
+export const roleOptions = Object.values(RoleEnum);
